@@ -13,7 +13,7 @@ module.exports = (app) => {
             if(err)
                 cosnsole.log(err);
 
-            res.send(results);
+            res.render('product/list', {books: results});
         });
         conn.end();
         // res.render('product/list');
