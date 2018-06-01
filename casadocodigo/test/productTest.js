@@ -15,16 +15,6 @@ describe('#ProductController', () => {
             }
         };
 
-        var configuracoes = {
-            hostname: 'localhost',
-            port: 3000,
-            path: '/products',
-            headers: {
-                'Accept': 'application/json'
-                //'Accept': 'text/html'
-            }
-        };
-        
         http.get(configuracoes, function(res){
             assert.equal(res.statusCode, 200);
             assert.equal(res.headers['content-type'], 'application/json; charset=utf-8');
