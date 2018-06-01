@@ -1,10 +1,14 @@
 module.exports = (app) => {
-    app.get('/products', (req, res) => {
+    app.get('/products', (req, res, next) => {
 
         var conn = app.infra.databaseFactory();
         var productDAO = new app.infra.ProductDAO(conn);
 
         productDAO.list( (err, results) => {
+
+            if (err) {
+                return next(err);
+            }   
 
             res.format({
                 html: () => {
@@ -22,7 +26,7 @@ module.exports = (app) => {
         res.render('product/form', {errors: [], product: {}})
     });
 
-    app.post('/product', (req, res) => {
+    app.post('/product', (req, res, next) => {
 
         req.assert('titulo', 'Title is required').notEmpty();
         req.assert('preco', 'Price is required').isFloat();
@@ -30,7 +34,7 @@ module.exports = (app) => {
         
         var product = req.body;
 
-        console.log(product);
+        // validation error
         if (errors) {
             res.format({
                 html: () => {
@@ -46,7 +50,10 @@ module.exports = (app) => {
         var conn = app.infra.databaseFactory();
         var productDAO = new app.infra.ProductDAO(conn);
 
-        productDAO.save(product, () => {
+        productDAO.save(product, (err) => {
+            if (err) {
+                return next(err);
+            }
             res.redirect('/products');
         });
     });

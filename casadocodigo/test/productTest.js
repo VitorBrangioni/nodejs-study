@@ -9,4 +9,16 @@ describe('#ProductController', () => {
             .expect(200, done);
     });
 
+    it('#Test register product with invalid data', (done) => {
+        request.post('/product')
+            .send({titulo: "", descricao: "description test"})
+            .expect(400, done);
+    });
+
+    it('#Test register product with valid data', (done) => {
+        request.post('/product')
+            .send({titulo: "title test", descricao: "description test", preco: 3})
+            .expect(302, done);
+    });
+
 });
