@@ -19,7 +19,7 @@ var client = http.request(configuracoes, function(res){
 });
 
 var produto = {
-    titulo : 'mais sobre o node',
+    titulo : '',
     descricao : 'node, javascript e um pouco de http',
     preco : 29.50
 }
