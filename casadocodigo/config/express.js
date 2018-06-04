@@ -12,13 +12,36 @@ module.exports = () => {
 
     app.use(express.static('./app/public'))
 
-    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.use(expressValidator());
 
-    load('routes', {cwd: 'app'})
+
+
+
+
+    // 2) Erros
+
+
+
+    load('routes', { cwd: 'app' })
         .then('infra')
         .into(app);
+
+
+    // 1) rota invalida
+    app.use((req, res, next) => {
+        res.status(404).render('errors/404');
+        next();
+    });
+
+    app.use( (err, req, res, next) => {
+        if (process.env.NODE_ENV == 'production') {
+            res.status(500).render('errors/500');
+            return;
+        }
+        next(err);
+    });
 
     return app;
 }
