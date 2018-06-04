@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register Promotion</title>
+</head>
+
+<body>
+
+    <form action="/promotion" method="post">
+        <div class="container">
+            <div class="row">
+                <div class="col m12">
+                    <h1>Register Promotions</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m12">
+                    <input type="text" name="msg" id="msg" placeholder="Message">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m12">
+                    <select name="book" id="book">
+                        <% books.forEach( book => { %>
+                            <option value="<%= book.id %>">
+                                <%= book.titulo %>
+                            </option>
+                            <% }); %>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col m12">
+                    <input type="submit" value="Register">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        //var socket = new io.Socket('localhost',{'port':3000});
+        // socket.connect();
+        console.log(socket);
+        socket.on('newPromotion',function(data){
+            alert("Livro em promocao");
+        });
+    </script>
+
+</body>
+
+</html>
